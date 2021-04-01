@@ -8,7 +8,7 @@ const permission = db.define(
       type: Sequelize.INTEGER(11),
       primaryKey: true,
       autoIncrement: true,
-      comment: "自增id",
+      comment: "autoIncrement id",
     },
     title: {
       type: Sequelize.STRING(50),

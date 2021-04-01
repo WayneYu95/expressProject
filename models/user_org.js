@@ -7,7 +7,7 @@ const user_org = db.define(
       type: Sequelize.INTEGER,
       primaryKey: true,
       autoIncrement: true,
-      comment: "自增id",
+      comment: "autoIncrement id",
     },
     userId: {
       type: Sequelize.STRING,

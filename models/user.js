@@ -7,7 +7,7 @@ const user = db.define(
       type: Sequelize.INTEGER,
       primaryKey: true,
       autoIncrement: true,
-      comment: "自增id",
+      comment: "autoIncrement id",
     },
     username: {
       type: Sequelize.STRING,
@@ -17,7 +17,6 @@ const user = db.define(
       allowNull: false,
     },
     roleId: {
-      // 默认是普通用户
       type: Sequelize.INTEGER(1),
       defaultStatus: 2,
     },
@@ -39,6 +38,5 @@ const user = db.define(
     ],
   }
 );
-// 同步-- 检查表的状态并修正
 user.sync({ alter: true });
 module.exports = user;

@@ -6,7 +6,7 @@ const org_task = db.define("org_task", {
     type: Sequelize.INTEGER(11),
     primaryKey: true,
     autoIncrement: true,
-    comment: "自增id",
+    comment: "autoIncrement id",
   },
   userId: {
     type: Sequelize.INTEGER,
@@ -14,7 +14,7 @@ const org_task = db.define("org_task", {
   status: {
     type: Sequelize.INTEGER,
     defaultValue: 0,
-    comment: '0:未完成，1：完成'
+    comment: '0:incomplete，1：complete'
   },
   orgId: {
     type: Sequelize.INTEGER,
@@ -23,6 +23,5 @@ const org_task = db.define("org_task", {
     type: Sequelize.INTEGER,
   },
 });
-// 同步-- 检查表的状态并修正
 org_task.sync({ alter: true });
 module.exports = org_task;

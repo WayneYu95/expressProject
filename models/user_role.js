@@ -8,15 +8,15 @@ const user_role = db.define(
       type: Sequelize.INTEGER,
       primaryKey: true,
       autoIncrement: true,
-      comment: "自增id",
+      comment: "autoIncrement id",
     },
     uid: {
       type: Sequelize.INTEGER(11),
-      comment: "用户ID"
+      comment: "user ID"
     },
     role_id: {
       type: Sequelize.INTEGER(11),
-      comment: "角色ID"
+      comment: "role ID"
     },
   },
   {

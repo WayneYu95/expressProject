@@ -8,7 +8,7 @@ const role = db.define(
       type: Sequelize.INTEGER,
       primaryKey: true,
       autoIncrement: true,
-      comment: "自增id",
+      comment: "autoIncrement id",
     },
     roleName: {
       type: Sequelize.STRING,

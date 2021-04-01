@@ -8,7 +8,7 @@ const role_permission = db.define(
       type: Sequelize.INTEGER,
       primaryKey: true,
       autoIncrement: true,
-      comment: "自增id",
+      comment: "autoIncrement id",
     },
     role_id: {
       type: Sequelize.INTEGER(11),
