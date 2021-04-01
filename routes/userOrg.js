@@ -2,7 +2,7 @@ var express = require("express");
 var router = express.Router();
 var userOrg = require("../models/user_org");
 
-// 查找全部用户和组织的关系
+// find all relation between user and org
 router.post("/page", function (req, res, next) {
   let roleId = req.session.roleId;
   if (roleId == 1) {
@@ -14,7 +14,6 @@ router.post("/page", function (req, res, next) {
       });
     });
   } else {
-    // 只能看到自己在的组织
     let userId = req.session.userId;
     userOrg
       .findAll({
@@ -30,10 +29,7 @@ router.post("/page", function (req, res, next) {
       });
   }
 });
-// 用户权限 -- 邀请用户加入组织 必须是当前用户的组织
-// 1.查询可加入的
-// 2.
-// 添加记录
+// add record
 router.post("/add", function (req, res, next) {
   let { userId, orgId } = req.body;
   userOrg
@@ -47,7 +43,7 @@ router.post("/add", function (req, res, next) {
       if (result !== null) {
         res.json({
           code: 200,
-          msg: "该记录已存在",
+          msg: "This record already exist",
         });
       } else {
         userOrg
@@ -58,7 +54,7 @@ router.post("/add", function (req, res, next) {
           .then((result) => {
             res.json({
               code: 200,
-              msg: "创建成功~",
+              msg: "success create~",
               result,
             });
           });
@@ -66,7 +62,7 @@ router.post("/add", function (req, res, next) {
     }).catch(err => res.json(err))
 });
 
-// 删除该记录   把用户踢出组织
+// delete record, remove user from org
 router.post("/del", function (req, res, next) {
   let { userId, orgId } = req.body;
   userOrg
@@ -76,18 +72,18 @@ router.post("/del", function (req, res, next) {
     .then((reulst) => {
       if (reulst) {
         res.json({
-          msg: "删除成功~",
+          msg: "success delete~",
           code: 200,
         });
       } else {
         res.json({
-          msg: "该记录不存在",
+          msg: "Record not found",
           code: 200,
         });
       }
     });
 });
-// 修改 根据ID
+// update record
 router.post("/upd", function (req, res, next) {
   let { userId, orgId, id } = req.body;
   userOrg
@@ -101,13 +97,13 @@ router.post("/upd", function (req, res, next) {
       if (result != 0) {
         res.json({
           code: 200,
-          msg: "更新成功",
+          msg: "success update",
           result,
         });
       } else {
         res.json({
           code: 200,
-          msg: "查无此纪录",
+          msg: "Record not found",
           result,
         });
       }

@@ -2,7 +2,7 @@ var express = require("express");
 var router = express.Router();
 var org = require("../models/org");
 
-//查询所有的组织
+//find all organization
 router.post("/page", function (req, res, next) {
   org.findAll().then((data) => {
     res.json({
@@ -11,7 +11,7 @@ router.post("/page", function (req, res, next) {
     });
   });
 });
-// 新增组织
+// create new organization
 router.post("/add", function (req, res, next) {
   let { orgName } = req.body;
   org
@@ -29,19 +29,19 @@ router.post("/add", function (req, res, next) {
           .then((reulst) => {
             res.json({
               code: 200,
-              msg: "创建成功~",
+              msg: "success create~",
               data: reulst,
             });
           });
       } else {
         res.json({
           code: 200,
-          msg: "已存在该组织",
+          msg: "organization already exist",
         });
       }
     });
 });
-// 删除组织
+// delete organization
 router.post("/del", function (req, res, next) {
   let { id } = req.body;
   org
@@ -51,21 +51,21 @@ router.post("/del", function (req, res, next) {
     .then((reulst) => {
       if (reulst) {
         res.json({
-          msg: "删除成功~",
+          msg: "success delete~",
           code: 200,
         });
       } else {
         res.json({
-          msg: "该记录不存在",
+          msg: "Record not found",
           code: 200,
         });
       }
     });
 });
-// 修改组织
+// update organization
 router.post("/upd", function (req, res, next) {
   let { orgName, id } = req.body;
-  console.log("参数是",orgName, id);
+  console.log("parameters",orgName, id);
   org
     .update(
       { orgName },
@@ -77,13 +77,13 @@ router.post("/upd", function (req, res, next) {
       if (result != 0) {
         res.json({
           code: 200,
-          msg: "更新成功",
+          msg: "success update",
           result,
         });
       } else {
         res.json({
           code: 200,
-          msg: "查无此纪录",
+          msg: "Record not found",
           result,
         });
       }

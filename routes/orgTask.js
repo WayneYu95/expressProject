@@ -2,7 +2,7 @@ var express = require("express");
 var router = express.Router();
 var orgTask = require("../models/org_task");
 
-//查一个组织的任务
+//find projects
 router.post("/page", function (req, res, next) {
   let { orgId } = req.body;
   orgTask
@@ -18,7 +18,7 @@ router.post("/page", function (req, res, next) {
       });
     });
 });
-/* 新增组织和任务
+/* add new project
   orgId, taskId
 */
 router.post("/add", function (req, res, next) {
@@ -34,7 +34,7 @@ router.post("/add", function (req, res, next) {
       if (result == null) {
         res.json({
           code: 200,
-          msg: "已有记录",
+          msg: "Record already exist",
           result,
         });
       }
@@ -46,13 +46,13 @@ router.post("/add", function (req, res, next) {
         .then((result) => {
           res.json({
             code: 200,
-            msg: "创建成功~",
+            msg: "success create~",
             result,
           });
         });
     });
 });
-// 删除组织和任务 -- 根据组织ID
+// delete project
 router.post("/del", function (req, res, next) {
   let { orgId } = req.body;
   orgTask
@@ -62,18 +62,18 @@ router.post("/del", function (req, res, next) {
     .then((reulst) => {
       if (reulst) {
         res.json({
-          msg: "删除成功~",
+          msg: "success delete~",
           code: 200,
         });
       } else {
         res.json({
-          msg: "该记录不存在",
+          msg: "Record not found",
           code: 200,
         });
       }
     });
 });
-// 修改 根据ID
+// update project
 router.post("/upd", function (req, res, next) {
   let { orgId, taskId, id } = req.body;
   orgTask
@@ -87,19 +87,19 @@ router.post("/upd", function (req, res, next) {
       if (result != 0) {
         res.json({
           code: 200,
-          msg: "更新成功",
+          msg: "success update",
           result,
         });
       } else {
         res.json({
           code: 200,
-          msg: "查无此纪录",
+          msg: "Record not found",
           result,
         });
       }
     });
 });
-// 为用户分配任务  --- 必须任务在组织内
+// assign project to user
 router.post("/userAddTask", function (req, res, next) {
   let { userId, taskId, orgId } = req.body;
   orgTask
@@ -118,19 +118,19 @@ router.post("/userAddTask", function (req, res, next) {
       if (result != 0) {
         res.json({
           code: 200,
-          msg: "更新成功",
+          msg: "success update",
           result,
         });
       } else {
         res.json({
           code: 200,
-          msg: "查无此纪录",
+          msg: "Record not found",
           result,
         });
       }
     });
 });
-// 取消任务负责人
+// unassign project from user
 router.post("/userDelTask", function (req, res, next) {
   let { userId, taskId, orgId } = req.body;
   orgTask
@@ -150,19 +150,19 @@ router.post("/userDelTask", function (req, res, next) {
       if (result != 0) {
         res.json({
           code: 200,
-          msg: "更新成功",
+          msg: "success update",
           result,
         });
       } else {
         res.json({
           code: 200,
-          msg: "查无此纪录",
+          msg: "Record not found",
           result,
         });
       }
     });
 });
-// 查询当前用户的组织
+// find user's current project
 router.post("/userOrg", function (req, res, next) {
   orgTask
     .findOne({

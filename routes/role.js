@@ -2,7 +2,7 @@ var express = require("express");
 var router = express.Router();
 var role = require("../models/role");
 
-// 分页查询角色
+// find all role
 router.post("/page", (req, res, next) => {
   role
     .findAll({
@@ -12,12 +12,12 @@ router.post("/page", (req, res, next) => {
     .then((data) => {
       res.json({
         code: 200,
-        msg: "查询成功~",
+        msg: "success find~",
         list: [...data],
       });
     });
 });
-// 新增角色
+// add role
 router.post("/add", function (req, res, next) {
   let { roleName, status, remark } = req.body;
   role
@@ -37,24 +37,24 @@ router.post("/add", function (req, res, next) {
           .then((reulst) => {
             res.json({
               code: 200,
-              msg: "创建成功~",
+              msg: "success create~",
               data: reulst,
             });
           });
       } else {
         res.json({
           code: 200,
-          msg: "已存在该角色",
+          msg: "role already exist",
         });
       }
     });
 });
-// 删除角色
+// delete role
 router.post("/del", function (req, res, next) {
   let { id } = req.body;
   if (!id) {
     res.json({
-      msg: "请传ID",
+      msg: "Please input ID",
     });
   }
   role
@@ -64,12 +64,12 @@ router.post("/del", function (req, res, next) {
     .then((reulst) => {
       if (reulst) {
         res.json({
-          msg: "删除成功~",
+          msg: "success delete~",
           code: 200,
         });
       } else {
         res.json({
-          msg: "该记录不存在",
+          msg: "Record not found",
           code: 200,
         });
       }
@@ -100,13 +100,13 @@ router.post("/upd", function (req, res, next) {
           .then((reulst) => {
             res.json({
               code: 200,
-              msg: "修改成功~",
+              msg: "success update~",
               data: reulst,
             });
           });
       } else {
         res.json({
-          msg: "请传入正确的ID",
+          msg: "please input correct ID",
           code: 200,
         });
       }

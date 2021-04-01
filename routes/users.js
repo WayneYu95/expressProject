@@ -3,7 +3,7 @@ var router = express.Router();
 var user = require("../models/user");
 var session = require("express-session");
 
-// 登录
+// login
 router.post("/login", function (req, res, next) {
   console.log(req.query, "query");
   console.log(req.body, "body");
@@ -26,34 +26,34 @@ router.post("/login", function (req, res, next) {
           },
           userId: req.session.userId,
           roleId: req.session.roleId,
-          msg: "登录成功~",
+          msg: "success login~",
         });
       } else {
-        res.send("账户或密码不正确");
+        res.send("Incorrect username or password");
       }
     })
     .catch((err) => {
       console.log(err);
     });
 });
-// 注销
+// logout
 router.get("/logout", function (req, res, next) {
   delete req.session.user;
   res.json({
     code: 200,
-    msg: "注销成功~",
+    msg: "success logout~",
   });
 });
-// 分页查询 默认一页十条，第1页
+
 router.get("/page", function (req, res, next) {
-  console.log("是否有登录", req.session.user);
+  console.log("if login", req.session.user);
   user
     .findAll({
-      limit: 10, //每页10条
-      offset: 0 * 10, //第x页*每页个数
+      limit: 10,
+      offset: 0 * 10,
     })
     .then((data) => {
-      console.log("数据", data);
+      console.log("data", data);
       res.json({
         code: 200,
         data,
@@ -64,7 +64,7 @@ router.get("/page", function (req, res, next) {
       res.json(err);
     });
 });
-// 新增用户
+// add new user
 router.post("/add", function (req, res, next) {
   let { username, pwd, status, remark = null, roleId } = req.body;
   user
@@ -86,24 +86,24 @@ router.post("/add", function (req, res, next) {
           .then((reulst) => {
             res.json({
               code: 200,
-              msg: "创建成功~",
+              msg: "success create~",
               data: reulst,
             });
           });
       } else {
         res.json({
           code: 200,
-          msg: "已存在该用户名",
+          msg: "username already exist",
         });
       }
     });
 });
-// 删除用户
+// delete user
 router.post("/del", function (req, res, next) {
   let { id } = req.body;
   if (!id) {
     res.json({
-      msg: "请传ID",
+      msg: "Please input ID",
     });
   }
   user
@@ -113,12 +113,12 @@ router.post("/del", function (req, res, next) {
     .then((reulst) => {
       if (reulst) {
         res.json({
-          msg: "删除成功~",
+          msg: "success delete~",
           code: 200,
         });
       } else {
         res.json({
-          msg: "该记录不存在",
+          msg: "Record not found",
           code: 200,
         });
       }
@@ -129,7 +129,7 @@ router.post("/del", function (req, res, next) {
       });
     });
 });
-// 更新用户
+// update user
 router.post("/upd", function (req, res, next) {
   let { username, pwd, status, remark, roleId } = req.body;
   user
@@ -143,22 +143,17 @@ router.post("/upd", function (req, res, next) {
       if (result != 0) {
         res.json({
           code: 200,
-          msg: "更新成功",
+          msg: "success update",
           result,
         });
       } else {
         res.json({
           code: 200,
-          msg: "查无此纪录",
+          msg: "Record not found",
           result,
         });
       }
     });
 });
-// // 测试
-// router.post("/test", function(req, res, next){
-//   // a = Sequelize.query("SELECT * FROM `user`")
-//   res.json('a')
-// })
 
 module.exports = router;

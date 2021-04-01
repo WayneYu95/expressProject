@@ -19,14 +19,14 @@ var app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-// 使用 session 中间件
+// use session middleware
 app.use(
   session({
-    secret: "secret", // 对session id 相关的cookie 进行签名
+    secret: "secret", // signature of related cookie
     resave: true,
-    saveUninitialized: false, // 是否保存未初始化的会话
+    saveUninitialized: false, // if save related conversation
     cookie: {
-      maxAge: 1000 * 60 * 3, // 设置 session 的有效时间，单位毫秒
+      maxAge: 1000 * 60 * 3, // setup session time(unit ms)
     },
   })
 );
@@ -52,7 +52,7 @@ var user_org = require("./models/user_org");
 
 app.use("/", indexRouter);
 
-// 拦截 --- 通过角色ID，获取权限表。
+// intercept --- use user ID
 app.use((req, res, next) => {
   let action = req.originalUrl;
   console.log("action", action);
@@ -61,19 +61,14 @@ app.use((req, res, next) => {
     next();
   } else {
     let roleId = req.session.roleId;
-    // 1为经理，所有放权
-    //  else if (roleId == 1) {
-    //   next();
-    // }
     if (!roleId) {
       res.json({
         code: 200,
-        msg: "登录过期",
+        msg: "login expire",
         role: roleId,
         action,
       });
     } else {
-      // 通过角色获取权限列表;
       permissionRole
         .findAll({
           attributes: ["permission_id"],
@@ -83,9 +78,8 @@ app.use((req, res, next) => {
           },
         })
         .then((apiList) => {
-          console.log("接口拦截", apiList);
+          console.log("intercept", apiList);
           apiList = apiList.map((item) => item.permission_id);
-          // 通过权限列表获取，权限路由
           promission
             .findAll({
               attributes: ["action"],
@@ -100,7 +94,7 @@ app.use((req, res, next) => {
               } else {
                 res.json({
                   code: 200,
-                  msg: "无权限",
+                  msg: "no permission",
                   result,
                 });
               }

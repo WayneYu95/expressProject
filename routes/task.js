@@ -2,7 +2,7 @@ var express = require("express");
 var router = express.Router();
 var task = require("../models/task");
 
-//查询所有的任务
+//find all tasks
 router.post("/page", function (req, res, next) {
   task.findAll().then((data) => {
     res.json({
@@ -12,7 +12,7 @@ router.post("/page", function (req, res, next) {
     });
   });
 });
-// 新增任务
+// add new task
 router.post("/add", function (req, res, next) {
   let { taskName, remark } = req.body;
   task
@@ -26,19 +26,19 @@ router.post("/add", function (req, res, next) {
         task.create({ taskName, remark }).then((reulst) => {
           res.json({
             code: 200,
-            msg: "创建成功~",
+            msg: "success create~",
             data: reulst,
           });
         });
       } else {
         res.json({
           code: 200,
-          msg: "已存在该任务名",
+          msg: "task already exist",
         });
       }
     });
 });
-// 删除任务
+// delete task
 router.post("/del", function (req, res, next) {
   let { id } = req.body;
   task
@@ -48,18 +48,18 @@ router.post("/del", function (req, res, next) {
     .then((reulst) => {
       if (reulst) {
         res.json({
-          msg: "删除成功~",
+          msg: "success delete~",
           code: 200,
         });
       } else {
         res.json({
-          msg: "该记录不存在",
+          msg: "Record not found",
           code: 200,
         });
       }
     });
 });
-// 修改任务
+// update task
 router.post("/upd", function (req, res, next) {
   let { taskName, id, remark = undefined, status = undefined } = req.body;
   task
@@ -73,19 +73,19 @@ router.post("/upd", function (req, res, next) {
       if (result != 0) {
         res.json({
           code: 200,
-          msg: "更新成功",
+          msg: "success update",
           result,
         });
       } else {
         res.json({
           code: 200,
-          msg: "查无此纪录",
+          msg: "Record not found",
           result,
         });
       }
     });
 });
-// 修改任务状态任务
+// update task status
 router.post("/upd", function (req, res, next) {
   let { taskName, id, remark = undefined, status = undefined } = req.body;
   task
@@ -99,13 +99,13 @@ router.post("/upd", function (req, res, next) {
       if (result != 0) {
         res.json({
           code: 200,
-          msg: "更新成功",
+          msg: "success update",
           result,
         });
       } else {
         res.json({
           code: 200,
-          msg: "查无此纪录",
+          msg: "Record not found",
           result,
         });
       }
